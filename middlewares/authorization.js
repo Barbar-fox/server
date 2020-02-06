@@ -1,0 +1,1 @@
+const { UserHotel } = require('../models')
