@@ -1,6 +1,6 @@
 const { UserHotel } = require('../models')
 
-module.exports = (req, res, next) {
+module.exports = (req, res, next) => {
    UserHotel.findOne({
       where : {
          id : req.params.id
