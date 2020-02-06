@@ -25,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     date: {
       type: DataTypes.DATE,
       allowNull: false,
-      validate: {
-        notNull: { args: true, msg: "Date cannot null" },
-        isDate: { args: true, msg: "Invalid date" },
-        isAfter: { args: new Date(), msg: "Invalid date" }
-      }
+      // validate: {
+      //   notNull: { args: true, msg: "Date cannot null" },
+      //   isDate: { args: true, msg: "Invalid date" },
+      //   isAfter: { args: new Date(), msg: "Invalid date" }
+      // }
     }
   }, {
     sequelize
