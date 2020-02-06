@@ -45,6 +45,10 @@ class UserController {
             next(err)
          })
    }
+
+   static gSignIn (req, res, next) {
+      
+   }
 }
 
 module.exports = UserController
