@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: { args: true, msg: "Price should not null" },
-        min: { args: 0, msg: "Price cannot negative" }
+        // min: { args: 0, msg: "Price cannot negative" }
       }
     }
   }, {
