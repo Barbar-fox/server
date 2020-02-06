@@ -9,7 +9,7 @@ const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 config.password = process.env.DEVELOPMENT_PASSWORD
 
-console.log(process.env.DEVELOPMENT_PASSWORD);
+// console.log(process.env.DEVELOPMENT_PASSWORD);
 
 
 let sequelize;
