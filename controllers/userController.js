@@ -1,6 +1,8 @@
 const { User } = require('../models')
 const bcrypt = require ('bcryptjs')
 const jwt = require ('jsonwebtoken')
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 
 class UserController {
@@ -47,7 +49,39 @@ class UserController {
    }
 
    static gSignIn (req, res, next) {
-      
+      let email
+      client.verifyIdToken({
+         idToken: req.body.idToken,
+         audience: process.env.CLIENT_ID
+      })
+         .then(data => {
+            email = data.payload.email
+
+            return User.findOne({
+               where : {
+                  email
+               }
+            })
+         })
+         .then(user => {
+            if (!user) {
+               console.log(`user baru`);
+               let newUser = {
+                  email, password: process.env.SECRET_PASSWORD
+               }
+               return User.create(newUser)
+            }
+            else {
+               return user
+            }
+         })
+         .then(userLogin => {
+            let token = jwt.sign({ id: userLogin.id }, process.env.JWT_SECRET);
+            res.status(200).json({token})
+         })
+         .catch(err => {
+            next(err)
+         })
    }
 }
 
