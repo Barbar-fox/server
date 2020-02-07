@@ -33,12 +33,38 @@ class UserHotelController {
 
    static findOne(req, res, next) {
       const userHotelId = req.params.id;
-      UserHotel.findOne({
-         where: { id: userHotelId }
-      })
-         .then(userHotel => {
+      const calenderificAPI = `https://calendarific.com/api/v2/holidays?api_key=${process.env.CALENDARIFIC_TOKEN}&country=ID&year=2020`;
+      const weatherbitAPI = `https://api.weatherbit.io/v2.0/current?city=Jakarta&country=Indonesia&lang=id&key=${process.env.WEATHERBIT_TOKEN}`;
 
+      let city = '', id = '';
+      const zomatoToken = process.env.ZOMATO_TOKEN;
+      const zomatoGetCityIdAPI = `https://developers.zomato.com/api/v2.1/locations?query=`;
+      const zomatoGetRestoAPI = `https://developers.zomato.com/api/v2.1/collections?city_id=`;
+
+      let userHotel;
+
+      UserHotel.findOne({
+         where: { id: userHotelId },
+         include: [Hotel, {
+            model: User,
+            attributes: ['id', 'name']
+         }]
+      })
+         .then(tmpUserHotel => {
+            city = tmpUserHotel.Hotel.location;
+            userHotel = tmpUserHotel;
+            return axios({
+               method: 'get',
+               url: zomatoGetCityIdAPI + city,
+               headers: {
+                  'user-key': zomatoToken
+               }
+            })
          })
+         .then(zomato => {
+            res.status(200).json(zomato.data)
+         })
+         .catch(next)
    }
 
    static delete(req, res, next) {

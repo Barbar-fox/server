@@ -7,7 +7,7 @@ const authorization = require('../middlewares/authorization')
 router.use(authentication)
 
 router.get('/', userHotelController.findAll)
-// router.get('/:id', authorization, userHotelController.findOne)
+router.get('/:id', authorization, userHotelController.findOne)
 router.delete('/:id', authorization, userHotelController.delete)
 
 router.post('/', userHotelController.create)
