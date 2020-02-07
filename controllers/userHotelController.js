@@ -1,11 +1,13 @@
 const { UserHotel } = require('../models')
 const { User } = require('../models')
 const { Hotel } = require('../models')
+const axios = require('axios')
 
 class UserHotelController {
    static findAll(req, res, next) {
       User.findAll({
          where: { id: req.currentUserId },
+         attributes: ['id', 'name'],
          include: [
             {
                model: UserHotel,
@@ -13,13 +15,27 @@ class UserHotelController {
             }
          ]
       })
-         .then(hotels => {
-            res.status(200).json({
-               data: hotels,
-               message: "Success get all hotels"
-            })
+         .then(user => {
+            if (user[0].UserHotels.length) {
+               res.status(200).json({
+                  data: user,
+                  message: `Success get all hotels for user ${user[0].name}`
+               })
+            } else {
+               res.status(200).json({
+                  data: [],
+                  message: `No booking for user ${user[0].name}`
+               })
+            }
          })
          .catch(next)
+   }
+
+   static findOne(req, res, next) {
+      const userHotelId = req.params.id;
+      UserHotel.findOne({
+         where: { id: userHotelId }
+      })
    }
 
    static create(req, res, next) {
