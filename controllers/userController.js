@@ -49,9 +49,11 @@ class UserController {
    }
 
    static gSignIn (req, res, next) {
+      // console.log(req.headers.idtoken, `ini dari clienttttttttttt`);
+      
       let email
       client.verifyIdToken({
-         idToken: req.body.idToken,
+         idToken: req.headers.idtoken,
          audience: process.env.CLIENT_ID
       })
          .then(data => {
