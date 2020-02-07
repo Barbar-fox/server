@@ -8,7 +8,7 @@ router.use(authentication)
 
 router.get('/', userHotelController.findAll)
 // router.get('/:id', authorization, userHotelController.findOne)
-// router.delete('/:id', authorization, userHotelController.delete)
+router.delete('/:id', authorization, userHotelController.delete)
 
 router.post('/', userHotelController.create)
 router.put('/:id', authorization, userHotelController.update)

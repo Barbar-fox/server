@@ -36,6 +36,23 @@ class UserHotelController {
       UserHotel.findOne({
          where: { id: userHotelId }
       })
+         .then(userHotel => {
+
+         })
+   }
+
+   static delete(req, res, next) {
+      const userHotelId = req.params.id;
+      UserHotel.destroy({
+         where: { id: userHotelId }
+      })
+         .then(userHotel => {
+            console.log(userHotel);
+            res.status(200).json({
+               message: `Success delete bookings with id ${userHotelId}`
+            })
+         })
+         .catch(next)
    }
 
    static create(req, res, next) {
