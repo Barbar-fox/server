@@ -84,7 +84,13 @@ class UserHotelController {
                }
             })
             userHotel.dataValues.resto = resto;
-            res.status(200).json(userHotel)
+            return axios({
+               method: 'get',
+               url: weatherbitAPI
+            })
+         })
+         .then(weather => {
+            userHotel.dataValues.weather = weather.data.data[0].weather.description.toUpperCase();
          })
          .catch(next)
    }
