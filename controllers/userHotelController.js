@@ -4,11 +4,12 @@ const { Hotel } = require('../models')
 
 class UserHotelController {
    static findAll(req, res, next) {
-      Hotel.findAll({
+      User.findAll({
+         where: { id: req.currentUserId },
          include: [
             {
                model: UserHotel,
-               include: [User]
+               include: [Hotel]
             }
          ]
       })
