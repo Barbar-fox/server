@@ -42,6 +42,7 @@ class UserHotelController {
       const zomatoGetRestoAPI = `https://developers.zomato.com/api/v2.1/collections?city_id=`;
 
       let userHotel;
+      const additionalPriceHoliday = 500e3;
 
       UserHotel.findOne({
          where: { id: userHotelId },
@@ -91,6 +92,33 @@ class UserHotelController {
          })
          .then(weather => {
             userHotel.dataValues.weather = weather.data.data[0].weather.description.toUpperCase();
+            return axios({
+               method: 'get',
+               url: calenderificAPI
+            })
+         })
+         .then(data => {
+            const calender = [];
+            data.data.response.holidays.forEach(el => {
+               calender.push({
+                  name: el.name,
+                  date: el.date.iso
+               })
+            })
+            let isHoliday = false;
+            calender.forEach(el => {
+               const holiday = new Date(el.date);
+               const bookingDay = new Date(userHotel.date);
+               if (holiday.toISOString() === bookingDay.toISOString()) {
+                  userHotel.Hotel.price += additionalPriceHoliday;
+                  isHoliday = true;
+               }
+            })
+            userHotel.dataValues.holiday = {
+               isHoliday,
+               additionalPriceHoliday
+            }
+            res.status(200).json(userHotel)
          })
          .catch(next)
    }
