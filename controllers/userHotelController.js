@@ -62,7 +62,29 @@ class UserHotelController {
             })
          })
          .then(zomato => {
-            res.status(200).json(zomato.data)
+            id = zomato.data.location_suggestions[0].entity_id;
+            console.log(zomatoGetRestoAPI + id);
+            return axios({
+               method: 'get',
+               url: zomatoGetRestoAPI + id,
+               headers: {
+                  'user-key': zomatoToken
+               }
+            })
+         })
+         .then(data => {
+            const resto = [];
+            data.data.collections.forEach((el, index) => {
+               if (index !== 0) {
+                  resto.push({
+                     title: el.collection.title,
+                     description: el.collection.description,
+                     image_url: el.collection.image_url
+                  })
+               }
+            })
+            userHotel.dataValues.resto = resto;
+            res.status(200).json(userHotel)
          })
          .catch(next)
    }
