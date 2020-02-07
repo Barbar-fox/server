@@ -396,3 +396,58 @@
    * **Code:** 404 <br />
 
     **Content:** `{ msg : "there's no data with id ${req.params.id}" }` 
+
+
+**Title**
+----
+  create UserHotel
+
+* **URL**`
+
+`/bookings` 
+
+* **Method:**
+
+`POST` 
+  
+
+*  **URL Params**
+
+   **Required:**
+ 
+`None` 
+
+   **Optional:**
+ 
+`None` 
+
+* **Data Params**
+
+`HotelId, date` 
+
+* **Success Response:**
+
+  + **Code:** 201 <br />
+
+    **Content:** `{ 
+      "id": "...",
+    "name": "...",
+    "location": "...",
+    "price": ...,
+    "createdAt": "...",
+    "updatedAt": "..."
+     }`
+
+ 
+
+* **Error Response:**
+
+  + **Code:** 500 <br />
+
+    **Content:** `{ msg : err.message }` 
+
+  OR
+
+  + **Code:** 400 <br />
+
+    **Content:** `{ errors : [....] }` 
