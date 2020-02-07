@@ -451,3 +451,125 @@
   + **Code:** 400 <br />
 
     **Content:** `{ errors : [....] }` 
+
+
+**Title**
+----
+  get UserHotel
+
+* **URL**`
+
+`/bookings/:id` 
+
+* **Method:**
+
+`GET` 
+  
+
+*  **URL Params**
+
+   **Required:**
+ 
+`id` 
+
+   **Optional:**
+ 
+`None` 
+
+* **Data Params**
+
+`None` 
+
+* **Success Response:**
+
+  + **Code:** 200 <br />
+
+    **Content:** `{ 
+       "id": ...,
+    "HotelId": ...,
+    "UserId": ...,
+    "date": "...",
+    "createdAt": "...",
+    "updatedAt": "...",
+    "Hotel": {
+        "id": ...,
+        "name": "...",
+        "location": "...",
+        "price": ...,
+        "createdAt": "...",
+        "updatedAt": "..."
+    },
+    "User": {
+        "id": ...,
+        "name": "..."
+    },
+    "resto": [
+        {
+            "title": "...",
+            "description": "...",
+            "image_url": "..."
+        }
+    ],
+    "weather": "...",
+    "holiday": {
+        "isHoliday": Boolean,
+        "additionalPriceHoliday": 500000
+    }
+     }`
+
+ 
+
+* **Error Response:**
+
+  + **Code:** 500 <br />
+
+    **Content:** `{ msg : err.message }` 
+
+
+**Title**
+----
+  delete UserHotel
+
+* **URL**
+
+`/bookings/:id` 
+
+* **Method:**
+
+`DELETE` 
+  
+
+*  **URL Params**
+
+   **Required:**
+ 
+`id` 
+
+   **Optional:**
+ 
+`None` 
+
+* **Data Params**
+
+`None` 
+
+* **Success Response:**
+
+  + **Code:** 200 <br />
+
+    **Content:** `{ 
+       `"messsge": 'Success delete bookings with id ${userHotelId}'`
+   }`
+ 
+
+* **Error Response:**
+
+  + **Code:** 500 <br />
+
+    **Content:** `{ msg : err.message }` 
+
+    OR
+
+   * **Code:** 404 <br />
+
+    **Content:** `{ msg : "there's no data with id ${req.params.id}" }` 
