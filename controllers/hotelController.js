@@ -82,7 +82,7 @@ class HotelController {
       })
          .then(data => {
             console.log(data, `ini lhoooooooo`);
-            
+
             if (data < 1) {
                next({ code: 404, message: `Hotel with id ${req.params.id} doesn't exists` })
             }

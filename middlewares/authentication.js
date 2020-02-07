@@ -8,16 +8,16 @@ module.exports = (req, res, next) => {
       if (decoded) {
          req.currentUserId = decoded.id
          User.findOne({
-            where : {
-               id : req.currentUserId
+            where: {
+               id: req.currentUserId
             }
          })
-            .then(data => {               
+            .then(data => {
                if (data) {
                   next()
                }
                else {
-                  next({code: 404, msg: `user with id ${req.currentUserId} doesn't exists`})
+                  next({ code: 404, msg: `user with id ${req.currentUserId} doesn't exists` })
                }
             })
             .catch(err => {
